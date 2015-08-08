@@ -716,13 +716,18 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
      * Calls the OAuth2 authentication method.
      */
     $scope.signIn = function () {
+    console.log(arguments);
         oauth2Provider.signIn(function () {
+            console.log('oauth2Provider.signIn');
             gapi.client.oauth2.userinfo.get().execute(function (resp) {
+                console.log('execute');
                 $scope.$apply(function () {
                     if (resp.email) {
+                        console.log('signIn - response ----')
                         oauth2Provider.signedIn = true;
                         $scope.alertStatus = 'success';
                         $scope.rootMessages = 'Logged in with ' + resp.email;
+                        console.log(resp);
                     }
                 });
             });
@@ -781,11 +786,14 @@ conferenceApp.controllers.controller('OAuth2LoginModalCtrl',
     function ($scope, $modalInstance, $rootScope, oauth2Provider) {
         $scope.singInViaModal = function () {
             oauth2Provider.signIn(function () {
+                console.log('signIn modal - response ----')
                 gapi.client.oauth2.userinfo.get().execute(function (resp) {
                     $scope.$root.$apply(function () {
+                        console.log('signIn Modal - response ----')
                         oauth2Provider.signedIn = true;
                         $scope.$root.alertStatus = 'success';
                         $scope.$root.rootMessages = 'Logged in with ' + resp.email;
+                        console.log(resp)
                     });
 
                     $modalInstance.close();

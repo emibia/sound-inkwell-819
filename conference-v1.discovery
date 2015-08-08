@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/_eYH0WLg5ESRR_p1NQhFEQ7giCo\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/PtdYybMm83kCqK3FlNqSoS2TJMw\"",
  "discoveryVersion": "v1",
  "id": "conference:v1",
  "name": "conference",
@@ -71,6 +71,99 @@
   }
  },
  "schemas": {
+  "ModelsConferenceForm": {
+   "id": "ModelsConferenceForm",
+   "type": "object",
+   "description": "ConferenceForm -- Conference outbound form message",
+   "properties": {
+    "city": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "endDate": {
+     "type": "string"
+    },
+    "maxAttendees": {
+     "type": "string",
+     "format": "int64"
+    },
+    "month": {
+     "type": "string",
+     "format": "int64"
+    },
+    "name": {
+     "type": "string"
+    },
+    "organizerDisplayName": {
+     "type": "string"
+    },
+    "organizerUserId": {
+     "type": "string"
+    },
+    "seatsAvailable": {
+     "type": "string",
+     "format": "int64"
+    },
+    "startDate": {
+     "type": "string"
+    },
+    "topics": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "websafeKey": {
+     "type": "string"
+    }
+   }
+  },
+  "ModelsConferenceForms": {
+   "id": "ModelsConferenceForms",
+   "type": "object",
+   "description": "ConferenceForms -- multiple Conference outbound form message",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "ConferenceForm -- Conference outbound form message",
+     "items": {
+      "$ref": "ModelsConferenceForm"
+     }
+    }
+   }
+  },
+  "ModelsConferenceQueryForm": {
+   "id": "ModelsConferenceQueryForm",
+   "type": "object",
+   "description": "ConferenceQueryForm -- Conference query inbound form message",
+   "properties": {
+    "field": {
+     "type": "string"
+    },
+    "operator": {
+     "type": "string"
+    },
+    "value": {
+     "type": "string"
+    }
+   }
+  },
+  "ModelsConferenceQueryForms": {
+   "id": "ModelsConferenceQueryForms",
+   "type": "object",
+   "description": "ConferenceQueryForms -- multiple ConferenceQueryForm inbound form message",
+   "properties": {
+    "filters": {
+     "type": "array",
+     "description": "ConferenceQueryForm -- Conference query inbound form message",
+     "items": {
+      "$ref": "ModelsConferenceQueryForm"
+     }
+    }
+   }
+  },
   "ModelsProfileForm": {
    "id": "ModelsProfileForm",
    "type": "object",
@@ -173,6 +266,22 @@
   }
  },
  "methods": {
+  "createConference": {
+   "id": "conference.createConference",
+   "path": "conference",
+   "httpMethod": "POST",
+   "description": "Create new conference.",
+   "request": {
+    "$ref": "ModelsConferenceForm",
+    "parameterName": "resource"
+   },
+   "response": {
+    "$ref": "ModelsConferenceForm"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "getProfile": {
    "id": "conference.getProfile",
    "path": "profile",
@@ -180,6 +289,22 @@
    "description": "Return user profile.",
    "response": {
     "$ref": "ModelsProfileForm"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "queryConferences": {
+   "id": "conference.queryConferences",
+   "path": "queryConferences",
+   "httpMethod": "POST",
+   "description": "Query for conferences.",
+   "request": {
+    "$ref": "ModelsConferenceQueryForms",
+    "parameterName": "resource"
+   },
+   "response": {
+    "$ref": "ModelsConferenceForms"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
